@@ -4,6 +4,10 @@ import * as cdk from 'aws-cdk-lib';
 import { AwsTodoAppStack } from '../lib/aws-todo-app-stack';
 
 const app = new cdk.App();
+
+// Determine the environment from a command-line argument or environment variable
+const environment = process.env.ENV || 'dev'; // Default to 'dev' if not specified
+
 new AwsTodoAppStack(app, 'AwsTodoAppStack', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
