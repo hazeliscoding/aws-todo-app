@@ -22,10 +22,14 @@
     "typescript": "~5.4.5"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.564.0",
+    "@aws-sdk/util-dynamodb": "^3.564.0",
+    "@types/aws-lambda": "^8.10.137",
     "aws-cdk-lib": "2.138.0",
     "constructs": "^10.0.0",
     "git-cz": "^4.9.0",
-    "source-map-support": "^0.5.21"
+    "source-map-support": "^0.5.21",
+    "ulid": "^2.3.0"
   },
   "config": {
     "commitizen": {
