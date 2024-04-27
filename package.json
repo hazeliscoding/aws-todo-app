@@ -9,7 +9,7 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "deploy": "cdk synth && cdk deploy --all"
+    "deploy": "cdk synth && cdk deploy --all --outputs-file output.json"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
