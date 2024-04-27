@@ -9,7 +9,8 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "deploy": "cdk synth && cdk deploy --all --outputs-file output.json"
+    "deploy": "cdk synth && cdk deploy --all --outputs-file output.json",
+    "signup": "jest --verbose ./__tests__/test_cases/e2e/confirm-user-sign-up.test.ts"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
@@ -22,11 +23,15 @@
     "typescript": "~5.4.5"
   },
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.564.0",
     "@aws-sdk/client-dynamodb": "^3.564.0",
     "@aws-sdk/util-dynamodb": "^3.564.0",
     "@types/aws-lambda": "^8.10.137",
+    "@types/chance": "^1.1.6",
     "aws-cdk-lib": "2.138.0",
+    "chance": "^1.1.11",
     "constructs": "^10.0.0",
+    "dotenv": "^16.4.5",
     "git-cz": "^4.9.0",
     "source-map-support": "^0.5.21",
     "ulid": "^2.3.0"

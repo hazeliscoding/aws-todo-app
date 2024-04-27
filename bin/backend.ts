@@ -7,6 +7,7 @@ import { AuthStack } from '../lib/auth-stack';
 
 // Determine the environment from a command-line argument or environment variable
 const environment = process.env.ENV || 'dev'; // Default to 'dev' if not specified
+console.log(process.env.TEST_VAR);
 
 const app = new cdk.App();
 const dbStack = new DatabaseStack(app, `TodoApp-${environment}-DatabaseStack`, {

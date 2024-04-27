@@ -12,7 +12,7 @@ const client = new DynamoDBClient({
 export const getUserByID = async (UserID: string) => {
   try {
     const params = {
-      TableName: "Users",
+      TableName: `TodoApp-${process.env.ENV}-Users`,
       Key: marshall({ UserID: UserID }),
     };
     const command = new GetItemCommand(params);
