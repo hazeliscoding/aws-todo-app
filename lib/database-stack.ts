@@ -8,6 +8,7 @@ interface DatabaseStackProps extends cdk.StackProps {
 
 export class DatabaseStack extends cdk.Stack {
   public readonly usersTable: Table;
+  public readonly todosTable: Table;
 
   constructor(scope: Construct, id: string, props: DatabaseStackProps) {
     super(scope, id, props);
@@ -20,6 +21,32 @@ export class DatabaseStack extends cdk.Stack {
       tableName: `TodoApp-${props.stage}-Users`,
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
+
+    this.todosTable = new Table(this, 'Todos', {
+      partitionKey: {
+        name: 'UserID',
+        type: AttributeType.STRING,
+      },
+      sortKey: {
+        name: 'TodoID',
+        type: AttributeType.STRING,
+      },
+      tableName: `TodoApp-${props.stage}-TodosTable`,
+      billingMode: BillingMode.PAY_PER_REQUEST,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
+
+    this.todosTable.addGlobalSecondaryIndex({
+      indexName: 'getTodoId',
+      partitionKey: {
+        name: 'UserID',
+        type: AttributeType.STRING,
+      },
+      sortKey: {
+        name: 'title',
+        type: AttributeType.STRING,
+      },
     });
   }
 }
