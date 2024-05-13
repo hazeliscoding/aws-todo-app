@@ -17,6 +17,7 @@ export class AppsyncStack extends cdk.Stack {
     super(scope, id, props);
 
     this.api = this.createAppSyncApi(props);
+    this.createTodoResolver(scope, props, this.api);
   }
 
   createAppSyncApi(props: AppsyncStackProps) {

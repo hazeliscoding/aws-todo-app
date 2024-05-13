@@ -13,13 +13,13 @@ const tableName = 'TodoApp-Todos';
 export const handler = async (event: AppSyncResolverEvent<any>) => {
   console.log('Received event:', JSON.stringify(event, null, 2));
 
-  const { userId, title } = event.arguments.input;
-  const todoId = ulid();
+  const { UserID, title } = event.arguments.input;
+  const TodoID = ulid();
   const params: PutItemCommandInput = {
     TableName: tableName,
     Item: marshall({
-      UserID: userId,
-      TodoID: todoId,
+      UserID,
+      TodoID,
       title: title,
       completed: false,
     }),
@@ -28,8 +28,8 @@ export const handler = async (event: AppSyncResolverEvent<any>) => {
   try {
     await client.send(new PutItemCommand(params));
     return {
-      UserID: userId,
-      TodoID: todoId,
+      UserID,
+      TodoID,
       title,
       completed: false,
     };

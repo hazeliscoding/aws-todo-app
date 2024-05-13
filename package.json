@@ -10,6 +10,7 @@
     "test": "jest",
     "cdk": "cdk",
     "deploy": "cdk synth && cdk deploy --all --outputs-file output.json",
+    "deploy:force": "cdk synth && cdk deploy --all --require-approval never --outputs-file output.json ",
     "signup": "jest --verbose ./__tests__/test_cases/e2e/confirm-user-sign-up.test.ts"
   },
   "devDependencies": {
