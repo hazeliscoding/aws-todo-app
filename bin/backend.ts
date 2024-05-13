@@ -7,15 +7,15 @@ import { AuthStack } from '../lib/auth-stack';
 import { AppsyncStack } from '../lib/appsync-stack';
 
 const app = new cdk.App();
-const dbStack = new DatabaseStack(app, `Dev-TodoApp-DatabaseStack`);
-const computeStack = new ComputeStack(app, `Dev-TodoApp-ComputeStack`, {
+const dbStack = new DatabaseStack(app, `TodoApp-Database`);
+const computeStack = new ComputeStack(app, `TodoApp-Compute`, {
   usersTable: dbStack.usersTable,
   todosTable: dbStack.todosTable,
 });
-const authStack = new AuthStack(app, `Dev-TodoApp-AuthStack`, {
+const authStack = new AuthStack(app, `TodoApp-Auth`, {
   addUserPostConfirmation: computeStack.addUserToTableFunc,
 });
-const appsyncStack = new AppsyncStack(app, `Dev-TodoApp-AppsyncStack`, {
+const appsyncStack = new AppsyncStack(app, `TodoApp-Appsync`, {
   userPool: authStack.todoUserPool,
   createTodoFunc: computeStack.createTodoFunc,
 });

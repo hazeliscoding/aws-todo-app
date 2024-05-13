@@ -8,7 +8,7 @@ import { AppSyncResolverEvent } from 'aws-lambda';
 import { ulid } from 'ulid';
 
 const client = new DynamoDBClient({ region: 'us-east-1' });
-const tableName = 'Todos';
+const tableName = 'TodoApp-Todos';
 
 export const handler = async (event: AppSyncResolverEvent<any>) => {
   console.log('Received event:', JSON.stringify(event, null, 2));

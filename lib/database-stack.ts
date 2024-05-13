@@ -2,10 +2,6 @@ import * as cdk from 'aws-cdk-lib';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 
-interface DatabaseStackProps extends cdk.StackProps {
-  stage: string;
-}
-
 export class DatabaseStack extends cdk.Stack {
   public readonly usersTable: Table;
   public readonly todosTable: Table;
@@ -18,12 +14,12 @@ export class DatabaseStack extends cdk.Stack {
         name: 'UserID',
         type: AttributeType.STRING,
       },
-      tableName: `Dev-TodoApp-Users`,
+      tableName: 'TodoApp-Users',
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
-    this.todosTable = new Table(this, 'Todos', {
+    this.todosTable = new Table(this, 'TodosTable', {
       partitionKey: {
         name: 'UserID',
         type: AttributeType.STRING,
@@ -32,7 +28,7 @@ export class DatabaseStack extends cdk.Stack {
         name: 'TodoID',
         type: AttributeType.STRING,
       },
-      tableName: `Dev-TodoApp-TodosTable`,
+      tableName: 'TodoApp-Todos',
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
