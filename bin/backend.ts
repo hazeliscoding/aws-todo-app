@@ -19,6 +19,7 @@ const computeStack = new ComputeStack(
   {
     stage: environment,
     usersTable: dbStack.usersTable,
+    todosTable: dbStack.todosTable,
   }
 );
 const authStack = new AuthStack(app, `TodoApp-${environment}-AuthStack`, {
@@ -31,5 +32,6 @@ const appsyncStack = new AppsyncStack(
   {
     stage: environment,
     userPool: authStack.todoUserPool,
+    createTodoFunc: computeStack.createTodoFunc
   }
 );

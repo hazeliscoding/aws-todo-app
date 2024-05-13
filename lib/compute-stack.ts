@@ -10,15 +10,18 @@ import path = require('path');
 interface ComputeStackProps extends cdk.StackProps {
   stage: string;
   usersTable: Table;
+  todosTable: Table
 }
 
 export class ComputeStack extends cdk.Stack {
   public readonly addUserToTableFunc: NodejsFunction;
+  public readonly createTodoFunc: NodejsFunction;
 
   constructor(scope: Construct, id: string, props: ComputeStackProps) {
     super(scope, id, props);
 
     this.addUserToTableFunc = this.addUserToUsersTable(props);
+    this.createTodoFunc = this.createTodoFunction(props);
   }
 
   addUserToUsersTable(props: ComputeStackProps) {
@@ -36,6 +39,27 @@ export class ComputeStack extends cdk.Stack {
       new iam.PolicyStatement({
         actions: ['dynamodb:PutItem'],
         resources: [props.usersTable.tableArn],
+      })
+    );
+
+    return func;
+  }
+
+  createTodoFunction(props: ComputeStackProps) {
+    const func = new NodejsFunction(this, 'createTodoFunc', {
+      functionName: `createTodoFunc-${props.stage}`,
+      runtime: Runtime.NODEJS_20_X,
+      handler: 'handler',
+      entry: path.join(
+        __dirname,
+        '../AppsyncFunctions/createTodo/index.ts'
+      ),
+    });
+
+    func.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ['dynamodb:PutItem'],
+        resources: [props.todosTable.tableArn],
       })
     );
 

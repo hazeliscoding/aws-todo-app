@@ -1,12 +1,14 @@
 import * as cdk from 'aws-cdk-lib';
 import * as awsAppSync from 'aws-cdk-lib/aws-appsync';
 import { UserPool } from 'aws-cdk-lib/aws-cognito';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Construct } from 'constructs';
 import * as path from 'path';
 
 interface AppsyncStackProps extends cdk.StackProps {
   stage: string;
   userPool: UserPool;
+  createTodoFunc: NodejsFunction;
 }
 
 export class AppsyncStack extends cdk.Stack {
@@ -47,5 +49,18 @@ export class AppsyncStack extends cdk.Stack {
     });
 
     return api;
+  }
+
+  createTodoResolver(
+    scope: Construct,
+    props: AppsyncStackProps,
+    api: awsAppSync.IGraphqlApi
+  ) {
+    const createTodoResolver = api
+      .addLambdaDataSource('CreateTodoDataSource', props.createTodoFunc)
+      .createResolver('CreateTodoMutation', {
+        typeName: 'Mutation',
+        fieldName: 'createTodo',
+      });
   }
 }
