@@ -8,7 +8,6 @@ import { Construct } from 'constructs';
 import path = require('path');
 
 interface ComputeStackProps extends cdk.StackProps {
-  stage: string;
   usersTable: Table;
   todosTable: Table
 }
@@ -26,7 +25,7 @@ export class ComputeStack extends cdk.Stack {
 
   addUserToUsersTable(props: ComputeStackProps) {
     const func = new NodejsFunction(this, 'addUserFunc', {
-      functionName: `addUserFunc-${props.stage}`,
+      functionName: `dev-addUserFunc-${this.region}`,
       runtime: Runtime.NODEJS_20_X,
       handler: 'handler',
       entry: path.join(
@@ -47,7 +46,7 @@ export class ComputeStack extends cdk.Stack {
 
   createTodoFunction(props: ComputeStackProps) {
     const func = new NodejsFunction(this, 'createTodoFunc', {
-      functionName: `createTodoFunc-${props.stage}`,
+      functionName: `dev-createTodoFunc-${this.region}`,
       runtime: Runtime.NODEJS_20_X,
       handler: 'handler',
       entry: path.join(

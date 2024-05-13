@@ -6,7 +6,6 @@ import { Construct } from 'constructs';
 import * as path from 'path';
 
 interface AppsyncStackProps extends cdk.StackProps {
-  stage: string;
   userPool: UserPool;
   createTodoFunc: NodejsFunction;
 }
@@ -22,7 +21,7 @@ export class AppsyncStack extends cdk.Stack {
 
   createAppSyncApi(props: AppsyncStackProps) {
     const api = new awsAppSync.GraphqlApi(this, 'TodoAppsyncApi', {
-      name: `TodoAppsyncApi-${props.stage}`,
+      name: `TodoAppsyncApi-${this.region}`,
       definition: awsAppSync.Definition.fromFile(
         path.join(__dirname, '../graphql/schema.graphql')
       ),

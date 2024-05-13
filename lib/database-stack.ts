@@ -10,7 +10,7 @@ export class DatabaseStack extends cdk.Stack {
   public readonly usersTable: Table;
   public readonly todosTable: Table;
 
-  constructor(scope: Construct, id: string, props: DatabaseStackProps) {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     this.usersTable = new Table(this, 'UsersTable', {
@@ -18,7 +18,7 @@ export class DatabaseStack extends cdk.Stack {
         name: 'UserID',
         type: AttributeType.STRING,
       },
-      tableName: `TodoApp-${props.stage}-Users`,
+      tableName: `Dev-TodoApp-Users`,
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
@@ -32,7 +32,7 @@ export class DatabaseStack extends cdk.Stack {
         name: 'TodoID',
         type: AttributeType.STRING,
       },
-      tableName: `TodoApp-${props.stage}-TodosTable`,
+      tableName: `Dev-TodoApp-TodosTable`,
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });

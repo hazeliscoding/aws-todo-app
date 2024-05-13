@@ -6,32 +6,16 @@ import { ComputeStack } from '../lib/compute-stack';
 import { AuthStack } from '../lib/auth-stack';
 import { AppsyncStack } from '../lib/appsync-stack';
 
-// Determine the environment from a command-line argument or environment variable
-const environment = process.env.ENV || 'dev'; // Default to 'dev' if not specified
-
 const app = new cdk.App();
-const dbStack = new DatabaseStack(app, `TodoApp-${environment}-DatabaseStack`, {
-  stage: environment,
+const dbStack = new DatabaseStack(app, `Dev-TodoApp-DatabaseStack`);
+const computeStack = new ComputeStack(app, `Dev-TodoApp-ComputeStack`, {
+  usersTable: dbStack.usersTable,
+  todosTable: dbStack.todosTable,
 });
-const computeStack = new ComputeStack(
-  app,
-  `TodoApp-${environment}-ComputeStack`,
-  {
-    stage: environment,
-    usersTable: dbStack.usersTable,
-    todosTable: dbStack.todosTable,
-  }
-);
-const authStack = new AuthStack(app, `TodoApp-${environment}-AuthStack`, {
-  stage: environment,
+const authStack = new AuthStack(app, `Dev-TodoApp-AuthStack`, {
   addUserPostConfirmation: computeStack.addUserToTableFunc,
 });
-const appsyncStack = new AppsyncStack(
-  app,
-  `TodoApp-${environment}-AppsyncStack`,
-  {
-    stage: environment,
-    userPool: authStack.todoUserPool,
-    createTodoFunc: computeStack.createTodoFunc
-  }
-);
+const appsyncStack = new AppsyncStack(app, `Dev-TodoApp-AppsyncStack`, {
+  userPool: authStack.todoUserPool,
+  createTodoFunc: computeStack.createTodoFunc,
+});

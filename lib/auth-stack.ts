@@ -4,7 +4,6 @@ import { aws_cognito as Cognito } from 'aws-cdk-lib';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 
 interface AuthStackProps extends cdk.StackProps {
-  stage: string;
   addUserPostConfirmation: NodejsFunction;
 }
 
@@ -23,7 +22,7 @@ export class AuthStack extends cdk.Stack {
 
   createUserPool(props: AuthStackProps) {
     const userPool = new Cognito.UserPool(this, 'TodoUserPool', {
-      userPoolName: `Todo-User-Pool-${props.stage}`,
+      userPoolName: `Dev-Todo-User-Pool`,
       selfSignUpEnabled: true,
       autoVerify: {
         email: true,
@@ -61,7 +60,7 @@ export class AuthStack extends cdk.Stack {
   createWebClient(props: AuthStackProps) {
     const client = new Cognito.UserPoolClient(
       this,
-      `Todo-User-Pool-Client-${props.stage}`,
+      `Dev-Todo-User-Pool-Client`,
       {
         userPool: this.todoUserPool,
         authFlows: {
