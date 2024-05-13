@@ -28,6 +28,32 @@ export const user_exists_in_UsersTable = async (
   }
 
   console.log('Found Item -->', item);
-  
+
   return item;
+};
+
+export const todo_exists_in_TodosTable = async (
+  userId: string,
+  todoId: string
+): Promise<any> => {
+  let Item: unknown;
+  const params = {
+    TableName: 'TodoApp-Todos',
+    Key: {
+      UserID: { S: userId },
+      TodoID: { S: todoId },
+    },
+  };
+
+  try {
+    const response = await ddbClient.send(new GetItemCommand(params));
+    if (response.Item) {
+      Item = unmarshall(response.Item);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+
+  console.log('Found Item -->', Item);
+  return Item;
 };
